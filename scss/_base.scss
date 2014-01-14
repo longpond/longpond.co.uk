@@ -1,0 +1,117 @@
+* {
+  @include box-sizing(border-box);
+}
+
+html {
+  background-color: $bg-color;
+  color: $text-color;
+  position: relative;
+  min-height: 100%;
+  font-family: $font-family;
+  font-size: $base-font-size;
+}
+
+body {
+  padding-top: $header-total-height;
+  margin: 0 0 $footer-total-height;
+}
+
+// Type
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font-family;
+  color: $heading-color;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $light-green;
+  }
+}
+
+// Main elements
+
+.container {
+  width: $container-width-small;
+  padding: 0 15px;
+  margin: 0 auto;
+
+  @include min-screen($container-width-medium) {
+    width: $container-width-medium;
+  }
+}
+
+header {
+  height: $header-height;
+  background-color: $header-bg;
+  color: $header-color;
+
+  &.fixed-top {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+
+  h1, nav {
+    float: left;
+  }
+
+  h1 {
+    color: $logo-color;
+    font-size: $logo-font-size;
+    margin: 0;
+    line-height: $header-height;
+
+    em {
+      color: $logo-secondary-color;
+    }
+  }
+}
+
+nav {
+  ul {
+    list-style-type: none;
+    margin: 20px 0 0 1.75em;
+    padding: 0;
+
+    li {
+      float: left;
+      margin-right: 1em;
+    }
+
+    a {
+      font-size: 0.9em;
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+#main {
+  .anchor {
+    display: block;
+    position: relative;
+    top: -($header-total-height);
+    visibility: hidden;
+  }
+
+  .lead h2 {
+    margin-top: 0;
+  }
+}
+
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: $footer-height;
+  line-height: $footer-height;
+  background-color: $footer-bg;
+  color: $white;
+  font-size: $footer-font-size;
+}
