@@ -8,9 +8,13 @@ $off-white: #f9f2e7;
 $light-green: aee239;
 $green: #8fbe00;
 
+// Responsive
+$break-small: 535px;
+$break-medium: 768px;
+
 // Grid
 $container-width-small: 100%;
-$container-width-medium: 768px;
+$container-width-medium: $break-medium;
 
 $bg-color: $off-white;
 $text-color: $black;
@@ -19,13 +23,15 @@ $base-font-size: 18px;
 $link-color: $green;
 $link-hover-color: $light-green;
 $heading-color: $blue;
-$main-vertical-margin: 20px;
+$vertical-margin: 20px;
 
 $header-font-family: $font-family;
 $header-bg: $white;
 $header-color: $black;
-$header-height: 60px;
-$header-total-height: $header-height + $main-vertical-margin;
+$header-height: 100px;
+$header-height-medium: 60px;
+$header-total-height: $header-height + $vertical-margin;
+$header-total-height-medium: $header-height-medium + $vertical-margin;
 
 $logo-color: $teal;
 $logo-font-size: 24px;
@@ -33,5 +39,5 @@ $logo-secondary-color: $blue;
 
 $footer-bg: $teal;
 $footer-height: 45px;
-$footer-total-height: $footer-height + $main-vertical-margin;
+$footer-total-height: $footer-height + $vertical-margin;
 $footer-font-size: 14px;

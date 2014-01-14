@@ -14,6 +14,10 @@ html {
 body {
   padding-top: $header-total-height;
   margin: 0 0 $footer-total-height;
+
+  @include min-screen($break-small) {
+    padding-top: $header-total-height-medium;
+  }
 }
 
 // Type
@@ -39,7 +43,7 @@ a {
   padding: 0 15px;
   margin: 0 auto;
 
-  @include min-screen($container-width-medium) {
+  @include min-screen($break-medium) {
     width: $container-width-medium;
   }
 }
@@ -56,40 +60,62 @@ header {
     top: 0;
   }
 
-  h1, nav {
-    float: left;
-  }
-
   h1 {
     color: $logo-color;
     font-size: $logo-font-size;
-    margin: 0;
-    line-height: $header-height;
+    margin: 14px 0;
+    padding: 0;
 
     em {
       color: $logo-secondary-color;
     }
   }
-}
 
-nav {
-  ul {
-    list-style-type: none;
-    margin: 20px 0 0 1.75em;
-    padding: 0;
+  nav {
+    ul {
+      list-style-type: none;
+      margin: 0 0 14px 0;
+      padding: 0;
+      overflow: hidden;
+    }
 
     li {
       float: left;
       margin-right: 1em;
-    }
 
-    a {
-      font-size: 0.9em;
-      display: block;
-      margin-bottom: 20px;
+      a {
+        font-size: 0.9em;
+      }
     }
   }
 }
+
+@include min-screen($break-small) {
+  header {
+    height: $header-height-medium;
+
+    h1, nav {
+      float: left;
+    }
+
+    h1 {
+      margin: 0;
+      line-height: $header-height-medium;
+    }
+
+    nav {
+      ul {
+        margin: 20px 0 0 1.75em;
+
+        a {
+          display: block;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
 
 #main {
   .anchor {
@@ -101,6 +127,12 @@ nav {
 
   .lead h2 {
     margin-top: 0;
+  }
+
+  @include min-screen($break-small) {
+    .anchor {
+      top: -($header-total-height-medium);
+    }
   }
 }
 
