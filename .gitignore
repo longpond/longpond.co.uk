@@ -18,4 +18,4 @@ node_modules
 bower_components
 
 resources/public/css/style.css
-resources/public/js/out.js
+resources/public/js/main.js

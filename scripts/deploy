@@ -6,5 +6,5 @@ cd src/longpond.co.uk
 git pull
 npm install
 bower install
-grunt build
+gulp build
 EOF
