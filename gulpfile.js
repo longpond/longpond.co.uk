@@ -10,7 +10,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('copy', function() {
-  gulp.src('bower_components/normalize-css/normalize.css')
+  return gulp.src('bower_components/normalize-css/normalize.css')
     .pipe(rename('_normalize.scss'))
     .pipe(gulp.dest('bower_components/normalize-css'));
 });
@@ -25,7 +25,7 @@ gulp.task('styles', ['copy'], function() {
     ]
   };
 
-  gulp.src('scss/style.scss')
+  return gulp.src('scss/style.scss')
     .pipe(sass(opts))
     .pipe(gulp.dest('resources/public/css'));
 });
