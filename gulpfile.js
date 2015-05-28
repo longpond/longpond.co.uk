@@ -1,38 +1,77 @@
 var gulp = require('gulp');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var sass = require('gulp-sass');
+var gutil = require('gulp-util');
+var changed = require('gulp-changed');
+var nunjucks = require('gulp-nunjucks-html');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config');
+var webpackCompiler = webpack(webpackConfig);
+var paths = {
+  dist: 'dist',
+  templates: 'templates/**/*.html',
+  publicFiles: 'public/**/*'
+};
 
-gulp.task('scripts', function() {
-  return gulp.src(['resources/public/js/lib/*.js'])
-    .pipe(uglify())
-    .pipe(gulp.dest('resources/public/js'));
-});
+function webpackCompilationHandler(cb) {
+  return function(err, stats) {
+    if (err) {
+      throw new gutil.PluginError('webpack', err);
+    }
 
-gulp.task('copy', function() {
-  return gulp.src('bower_components/normalize-css/normalize.css')
-    .pipe(rename('_normalize.scss'))
-    .pipe(gulp.dest('bower_components/normalize-css'));
-});
+    gutil.log('[webpack]', stats.toString({
+      colors: true
+    }));
 
-gulp.task('styles', ['copy'], function() {
-  var opts = {
-    outputStyle: 'compressed',
-    includePaths: [
-      'bower_components/bourbon/app/assets/stylesheets',
-      'bower_components/sass-mediaqueries',
-      'bower_components/normalize-css'
-    ]
+    if (cb) {
+      cb();
+    }
   };
+}
 
-  return gulp.src('scss/style.scss')
-    .pipe(sass(opts))
-    .pipe(gulp.dest('resources/public/css'));
+gulp.task('webpack', function(cb) {
+  webpackCompiler.run(webpackCompilationHandler(cb));
 });
 
-gulp.task('watch', function() {
-  gulp.watch('scss/**/*.scss', ['styles']);
+gulp.task('watch-webpack', function() {
+  webpackCompiler.watch({
+    aggregateTimeout: 200
+  }, webpackCompilationHandler());
 });
 
-gulp.task('build', ['scripts', 'copy', 'styles']);
-gulp.task('default', ['build', 'watch']);
+gulp.task('nunjucks', function() {
+  return gulp.src(paths.templates)
+    .pipe(nunjucks({
+      searchPaths: ['templates'],
+      autoescape: true
+    }))
+    .on('error', function(err) {
+      gutil.log('[nunjucks]', err);
+    })
+    .pipe(gulp.dest(paths.dist));
+});
+
+gulp.task('copy-public-files', function() {
+  return gulp.src(paths.publicFiles)
+    .pipe(changed(paths.dist))
+    .pipe(gulp.dest(paths.dist));
+});
+
+gulp.task('watch-default', ['copy-public-files', 'nunjucks'], function() {
+  gulp.watch(paths.publicFiles, ['copy-public-files']);
+  gulp.watch(paths.templates, ['nunjucks']);
+});
+
+gulp.task('run-server', function() {
+  var http = require('http');
+  var ecstatic = require('ecstatic');
+
+  http.createServer(ecstatic({
+    root: paths.dist,
+    cache: null
+  })).listen(8000, 'localhost');
+
+  gutil.log('[run-server] Listening on localhost:8000');
+});
+
+gulp.task('build', ['copy-public-files', 'nunjucks', 'webpack']);
+gulp.task('watch', ['watch-default', 'watch-webpack']);
+gulp.task('default', ['watch']);
