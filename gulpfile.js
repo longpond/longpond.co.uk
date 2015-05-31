@@ -74,4 +74,5 @@ gulp.task('run-server', function() {
 
 gulp.task('build', ['copy-public-files', 'nunjucks', 'webpack']);
 gulp.task('watch', ['watch-default', 'watch-webpack']);
-gulp.task('default', ['watch']);
+gulp.task('develop', ['run-server', 'watch']);
+gulp.task('default', ['develop']);
