@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+# -*- mode: sh -*-
+
+SESSION_NAME="lpd-web"
+PROJECT_DIR="$HOME/Projects/LongPond/internal/longpond.co.uk"
+
+if tmux has-session -t $SESSION_NAME 2>/dev/null; then
+  tmux attach -t $SESSION_NAME -d
+  exit
+fi
+
+tmux new-session -d -s $SESSION_NAME -n "work" -c $PROJECT_DIR
+tmux new-window -t $SESSION_NAME:2 -n "tasks" -c $PROJECT_DIR
+
+tmux send-keys -t $SESSION_NAME:1
+tmux send-keys -t $SESSION_NAME:2 "gulp develop" C-m
+
+tmux select-window -t $SESSION_NAME:1
+tmux attach-session -t $SESSION_NAME
