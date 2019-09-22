@@ -24,14 +24,19 @@
 
     .info {
       position: absolute;
-      right: 4rem;
-      bottom: 3rem;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      max-width: 62%;
       color: white;
     }
 
     .title {
-      font-size: 3rem;
+      font-size: 2rem;
       margin: 0 0 0.5rem;
+    }
+
+    .part {
+      display: block;
     }
 
     .contact {
@@ -39,33 +44,32 @@
       margin: 0;
     }
 
-    @media (max-width: 35rem) {
-      .info {
-        max-width: 62%;
-        right: 1.5rem;
-        bottom: 1.5rem;
-      }
-
+    @media only screen and (min-width: 20rem) {
       .title {
         font-size: 2.5rem;
       }
-
-      .part {
-        display: block;
-      }
-
     }
 
-    @media (max-width: 20rem) {
+    @media only screen and (min-width: 64rem) {
+      .info {
+        right: 4rem;
+        bottom: 3rem;
+        max-width: unset;
+      }
+
+      .part {
+        display: inline;
+      }
+
       .title {
-        font-size: 2rem;
+        font-size: 3rem;
       }
     }
   </style>
 </head>
 <body>
 <div class="info">
-  <h1 class="title"><span class="part">Long Pond</span> Digital</h1>
+  <h1 class="title"><div class="part">Long Pond</div> Digital</h1>
   <h2 class="contact">hello@longpond.co.uk</h2>
 </div>
 </body>
